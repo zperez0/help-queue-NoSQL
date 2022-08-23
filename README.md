@@ -2,7 +2,7 @@
 
 This project contains all the code from the LearnHowToProgram.com Section 2: React Fundamentals coursework in which we created a Help Queue project. 
 
-It is meant to be used as a starter repo to continue the Help Queue project in Section 4: React with NoSQL, starting in the lesson ""Refactoring Help Queue to Use Hooks"":
+It is meant to be used as a starter repo to continue the Help Queue project in Section 4: React with NoSQL, starting in the lesson "Refactoring Help Queue to Use Hooks":
 
 [https://www.learnhowtoprogram.com/react/react-with-nosql/refactoring-help-queue-to-use-hooks](https://www.learnhowtoprogram.com/react/react-with-nosql/refactoring-help-queue-to-use-hooks)
 
