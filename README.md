@@ -1,6 +1,6 @@
-## Help Queue Redux
+## Help Queue NoSQL
 
-A React application built to learn Hooks. 
+A React application built to learn how to implement hooks and Firebase. 
 
 #### By _**Z Perez**_
 
@@ -10,15 +10,16 @@ A React application built to learn Hooks.
 * _HTML_
 * _CSS_
 * _Markdown_
+* _Firebase_
 
 ## Description
 This application contains full CRUD functionality. A User can view the tickets details, add, update, and delete a ticket.
 
 ## Setup/Installation Requirements
-* _Go to [GitHub](https://github.com/zperez0/help-queue-redux.git)_
+* _Go to [GitHub](https://github.com/zperez0/help-queue-NoSQL.git)_
 * _Clone git repository to local machine_
 ```
-$ git clone https://github.com/zperez0/help-queue-hooks.git
+$ git clone https://github.com/zperez0/help-queue-NoSQL.git
 ```
 * _Navigate to root folder and open directory in your terminal_
 
