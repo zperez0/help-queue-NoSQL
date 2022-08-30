@@ -74,7 +74,10 @@ function TicketControl() {
   let currentlyVisibleState = null;
   let buttonText = null;
 
-  if (editing) {
+  if (error) {
+    currentlyVisibleState = <p>There was an error: {error}</p>
+
+  } else if (editing) {
     currentlyVisibleState = (
       <EditTicketForm
         ticket={selectedTicket}
@@ -105,18 +108,6 @@ function TicketControl() {
     );
     buttonText = "Add Ticket";
   }
-
-  // if (error) {
-  //   currentlyVisibleState = <p>There was an error: {error}</p>
-  // } else if (editing) {
-  //   ...
-  // } else if (selectedTicket != null) {
-  //   ...
-  // } else if (formVisibleOnPage) {
-  //   ...
-  // } else {
-  //   ...
-  // }
 
   return (
     <React.Fragment>
