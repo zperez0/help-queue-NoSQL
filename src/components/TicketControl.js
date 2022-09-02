@@ -12,6 +12,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db, auth } from "./../firebase.js";
+import { formatDistanceToNow } from 'date-fns';
 
 function TicketControl() {
   const [formVisibleOnPage, setFormVisibleOnPage] = useState(false);
@@ -21,25 +22,50 @@ function TicketControl() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(
-      collection(db, "tickets"),
-      (collectionSnapshot) => {
+    function updateTicketElapsedWaitTime() {
+      const newMainTicketList = mainTicketList.map(ticket => {
+        const newFormattedWaitTime = formatDistanceToNow(ticket.timeOpen);
+        return {...ticket, formattedWaitTime: newFormattedWaitTime};
+      });
+      setMainTicketList(newMainTicketList);
+    }
+
+    const waitTimeUpdateTimer = setInterval(() =>
+      updateTicketElapsedWaitTime(), 
+      60000
+    );
+
+    return function cleanup() {
+      clearInterval(waitTimeUpdateTimer);
+    }
+  }, [mainTicketList])
+
+  useEffect(()=> {
+    const unSubscribe =onSnapshot(
+      collection(db,"tickets"),
+      (collectionSnapshot)=>{
         const tickets = [];
-        collectionSnapshot.forEach((doc) => {
+        collectionSnapshot.forEach((doc)=>{
+          const timeOpen = doc.get('timeOpen', {serverTimestamps: "estimate"}).toDate();
+          const jsDate = new Date(timeOpen);
           tickets.push({
-            ...doc.data(),
-            id: doc.id,
-          });
+            names: doc.data().names,
+            location: doc.data().location,
+            issue: doc.data().issue,
+            timeOpen: jsDate,
+            formattedWaitTime: formatDistanceToNow(jsDate),
+            id: doc.id
         });
+      });
         setMainTicketList(tickets);
       },
-      (error) => {
+      (error)=> {
         setError(error.message);
       }
     );
+    return ()=> unSubscribe();
+  },[]);
 
-    return () => unSubscribe();
-  }, []);
 
   const handleClick = () => {
     if (selectedTicket != null) {
@@ -77,9 +103,6 @@ function TicketControl() {
     const selection = mainTicketList.filter((ticket) => ticket.id === id)[0];
     setSelectedTicket(selection);
   };
-
-  // let currentlyVisibleState = null;
-  // let buttonText = null;
 
   if (auth.currentUser == null) {
     return (
